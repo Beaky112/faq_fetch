@@ -14,82 +14,20 @@ Environment: Works in both headless and non-headless browser modes
 
 I chose Playwright because it allows precise control over web interactions, which was necessary for pages that load content dynamically or use JavaScript to reveal answers.
 
-Design and Architecture
-I structured the scraper as a class-based system called UniversalFAQScraper.
-The entire logic is organized around a configuration dictionary that defines:
+I built the Universal FAQ Scraper to automate the process of collecting FAQs from different websites and convert them into clean, structured data. The goal was to simplify dataset creation for chatbots since manually gathering data is repetitive and time-consuming.
 
-Base URL of the website
+I used Python with Playwright for browser automation because it handles dynamic pages and JavaScript-based content really well. The scraper supports both headless and non-headless modes and saves the results in JSONL format while logging errors in a text file.
 
-Output file paths
+The whole system is built around a class called UniversalFAQScraper, which runs based on a configuration dictionary. This setup defines details like the base URL, output paths, browser mode, scraper type, and delay intervals. I wanted to make it modular so that it’s easy to reuse for different websites without rewriting any logic.
 
-Browser mode
+When running, the scraper launches a browser, loads the target site, detects whether the layout is hierarchical or expandable, and then runs the appropriate scraping method. It extracts question-answer pairs, cleans the data, and stores it in a structured format. Failed or skipped pages are automatically logged for review.
 
-Scraper type (hierarchical, expandable, or auto-detect)
+I also focused on stability — adding proper error handling, timeouts, and retries so the scraper doesn’t stop midway if something fails. It can adapt to different site structures like Freshdesk or Zendesk automatically, making it highly scalable and flexible for large-scale FAQ extraction.
 
-Delay intervals between actions
+The final output is a clean JSONL dataset that’s ready for fine-tuning or integration with RAG-based chatbots. It also keeps a log file for any failed or missing pages, ensuring no data is lost.
 
-This modular design makes it easy to reconfigure the scraper for different websites without changing the main codebase.
-
-Implementation Flow
-Here’s how I implemented the scraping process step-by-step:
-
-Initialize the scraper with a configuration object.
-
-Launch the browser using Playwright.
-
-Navigate to the target website and wait for it to load completely.
-
-Automatically detect whether the page is hierarchical or expandable.
-
-Based on detection, call the respective scraping function:
-
-_scrape_hierarchical() for multi-level category pages.
-
-_scrape_expandable() for accordion-style pages.
-
-Extract question-and-answer pairs, clean them, and store them in structured format.
-
-Save the data into a JSONL file and record failed URLs in a separate log file.
-
-Error Handling and Stability
-During implementation, I added multiple error checks and exception handlers to make the scraper stable.
-
-If a link fails to load, it’s logged and skipped instead of stopping the process.
-
-Timeouts and dynamic delays were implemented to handle slow-loading pages.
-
-Invalid or empty entries are filtered out before saving to the output file.
-
-These additions make the scraper reliable even when dealing with unpredictable or inconsistent websites.
-
-Scalability and Flexibility
-I designed the scraper to handle multiple FAQ sources by simply updating the configuration.
-It can:
-
-Work across various platforms like Freshdesk, Zendesk, or AWS-style FAQs.
-
-Automatically detect the site’s layout without manual intervention.
-
-Adapt to small structural differences between websites.
-
-This makes it suitable for large-scale data gathering or multi-site automation projects.
-
-Output and Data Handling
-The scraper outputs clean, structured data in JSONL format, which is ideal for machine learning or chatbot training.
-Each record includes a question, answer, and sometimes the category name.
-I also created separate log files for skipped or failed pages to ensure no data is lost during long scraping sessions.
-
-Key Achievements in Implementation
-
-Built a universal system that can automatically identify FAQ structures.
-
-Implemented browser automation and DOM inspection using Playwright.
-
-Designed a modular, configurable architecture for easy reuse.
-
-Ensured fault tolerance through logging, retries, and structured error handling.
-
-Created a dataset-ready output format compatible with fine-tuning and RAG models.
+Overall, this project helped me understand web automation, DOM traversal, and data structuring in depth. The Universal FAQ Scraper turned out to be a reliable, adaptable tool that makes large-scale FAQ data collection easier and way more efficient.
 
 Conclusion
 Overall, this project strengthened my understanding of web automation, DOM traversal, and structured data extraction.The Universal FAQ Scraper stands as a flexible and reliable solution for large-scale FAQ data collection — combining automation, adaptability, and robustness in a single tool.
+
