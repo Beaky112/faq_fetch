@@ -363,16 +363,16 @@ YOUR RESPONSE:"""
             # Adjust temperature based on tone (if auto-adjust is enabled)
             if auto_adjust_temp:
                 tone_temps = {
-                    'angry': 0.3,      
-                    'formal': 0.4,     
-                    'casual': 0.8,     
-                    'urgent': 0.3,     
-                    'confused': 0.5,  
-                    'genalpha': 0.95,  
-                    'genz': 0.9,      
-                    'millennial': 0.85, 
-                    'aave': 0.9,       
-                    'neutral': 0.7    
+                    'angry': 0.3,      # More controlled for sensitive situations
+                    'formal': 0.4,     # Structured and professional
+                    'casual': 0.8,     # More creative and natural
+                    'urgent': 0.3,     # Direct and focused
+                    'confused': 0.5,   # Clear and explanatory
+                    'genalpha': 0.95,  # MAXIMUM CHAOS for brain rot
+                    'genz': 0.9,       # High creativity for authentic slang
+                    'millennial': 0.85, # Creative and expressive
+                    'aave': 0.9,       # Authentic and natural expression
+                    'neutral': 0.7     # Balanced
                 }
                 adjusted_temp = tone_temps.get(dominant_tone, temperature)
             else:
@@ -623,17 +623,19 @@ YOUR RESPONSE:"""
         
         return current_params
 
-
 def main():
     """Main function"""
     print("🚀 Starting Tone-Adaptive Chatbot...")
     
     # List of JSONL files to load
     jsonl_files = [
+        "services.jsonl",
         "rentomojo_faqs.jsonl",
-        "hospitality.jsonl",
         "healthcare.jsonl",
-        "finance.jsonl"
+        "finance.jsonl",
+        "education.jsonl",
+        "retail.jsonl",
+        "aws_faqs.jsonl"
     ]
     
     try:
@@ -649,7 +651,6 @@ def main():
     
     except Exception as e:
         print(f"❌ Failed to start chatbot: {e}")
-
 
 if __name__ == "__main__":
     main()
